@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class NoteBase(BaseModel):
     title: str
-    description: str | None = None
+    content: str | None = None
 
 
 class NoteCreate(NoteBase):
@@ -19,7 +19,6 @@ class Note(NoteBase):
 
 class UserBase(BaseModel):
     email: str
-    name: str
 
 
 class UserCreate(UserBase):
@@ -36,6 +35,11 @@ class User(UserBase):
         
 class Token(BaseModel):
     access_token: str
+    token_type: str
+    
+class RefreshToken(BaseModel):
+    access_token: str
+    refresh_token: str
     token_type: str
     
 class TokenData(BaseModel):

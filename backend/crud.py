@@ -33,9 +33,9 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
 
-def create_user(db: Session, user: schemas.UserCreate):
-    hashed_password = get_password_hash(user.password)
-    db_user = models.User(email=user.email, name=user.name, hashed_password=hashed_password)
+def create_user(db: Session, email:str, password:str):
+    hashed_password = get_password_hash(password)
+    db_user = models.User(email=email, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -66,7 +66,7 @@ def delete_user_note(db: Session, note_id: int):
 
 def update_user_note(db, note):
     db_note = get_note_by_id(db, note.id)
-    db_note.description = note.description
+    db_note.content = note.content
     db_note.title = note.title
     db.add(db_note)
     db.commit()
